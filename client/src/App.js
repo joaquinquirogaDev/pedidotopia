@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import Add_Product from "./AddProduct/Add_Product.js"
+import styles from "./App.css"
+//Material-ui
+import Button from '@material-ui/core/Button';
+
+
+
 
 function App() {
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className = {styles.App}>
+        <h1>PedidoTopia</h1>
+        <div>
+        <Button variant="contained" color="primary" href = "/product">
+          Agregar Producto
+        </Button>
+        </div>
+        <hr/>
+      <Switch>
+         <Route path = "/product" exact>
+           <Add_Product/>
+         </Route>
+      </Switch>
+      </div>
+    </Router>
   );
 }
 
