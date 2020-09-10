@@ -25,7 +25,6 @@ export default function Add_Product (){
             <input 
                 type="text"
                 placeholder="Titulo"
-                
               />
             </div>
             <div className={styles.inputcontenedor}>

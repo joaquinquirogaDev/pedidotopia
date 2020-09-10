@@ -15,8 +15,8 @@ function App() {
     <Router>
       <div className = {styles.App}>
         <h1>PedidoTopia</h1>
-        <div>
-        <Button variant="contained" color="primary" href = "/product">
+        <div style = {{padding: "20px"}}>
+        <Button  variant="contained" color="primary" href = "/product">
           Agregar Producto
         </Button>
         </div>
