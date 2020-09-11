@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
+import axios from 'axios';
 const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -21,7 +21,7 @@ const StyledTableCell = withStyles((theme) => ({
   }))(TableCell);
 
 
-  
+
   const StyledTableRow = withStyles((theme) => ({
     root: {
       '&:nth-of-type(odd)': {
@@ -29,22 +29,10 @@ const StyledTableCell = withStyles((theme) => ({
       },
     },
   }))(TableRow);
-  
-  function createData(Producto, Stock, Tipo, Proveedor) {
-    return { Producto, Stock, Tipo, Proveedor };
-  }
-  
-  const rows = [
-    createData("hola",5,"","PedidoTopia"),
-    createData( "lenceria",20,"","PedidoTopia" ),
-    createData("Pollera" ,10,"", "PedidoTopia"),
-    createData("Lompa Roto",5,"","PedidoTopia"),
-    createData("Camisa" ,15 ,"","PedidoTopia"),
-  ];
-  
+
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
+      minWidth: 500,
     },
   });
 
@@ -53,21 +41,18 @@ const StyledTableCell = withStyles((theme) => ({
 
 export default function Table_Products(){
   const [products,setProducts] = useState();
-useEffect(() =>{
-if(!products){
-  fetch('http://localhost:3000/shopify/products', {
-  method: 'GET',
-}).then((response) =>{
-console.log(response.data);
-setProducts(response.data);
-})
-
-}
+  useEffect(() =>{
+    if(!products){
+        axios.get("http://localhost:3000/shopify/products").then((res) => {
+          console.log(res.data)
+          setProducts(res.data)
+        })
+    }
   },[products]);
 
   const classes = useStyles();
     return (
-        <div style = {{marginRight: "480px", marginLeft: "480px"}}>
+        <div style = {{width: "850px",marginRight: "auto", marginLeft: "auto"}}>
         <TableContainer  component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -76,20 +61,22 @@ setProducts(response.data);
               <StyledTableCell align="center">Proveedor&nbsp;</StyledTableCell>
               <StyledTableCell align="right">Stock</StyledTableCell>
               <StyledTableCell align="right">Tipo&nbsp;</StyledTableCell>
-              
+              <StyledTableCell align="right">Precio</StyledTableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.Producto}>
-               
-               <StyledTableCell align="left">{row.Producto}</StyledTableCell>
-                <StyledTableCell align="center">{row.Proveedor}</StyledTableCell>
-                <StyledTableCell align="right">{row.Stock}</StyledTableCell>
-                <StyledTableCell align="right">{row.Tipo}</StyledTableCell>
-            
+            {products ? products.map((product) => (
+              <StyledTableRow key={product.id}>
+
+               <StyledTableCell align="left">{product.title}</StyledTableCell>
+                <StyledTableCell align="center">{product.vendor}</StyledTableCell>
+                <StyledTableCell align="right">{product.variants[0].inventory_quantity}</StyledTableCell>
+                <StyledTableCell align="right">{product.product_type}</StyledTableCell>
+                <StyledTableCell align="right">{product.variants[0].price}</StyledTableCell>
+
               </StyledTableRow>
-            ))}
+            )) : <p>No hay datos para mostrar</p>}
           </TableBody>
         </Table>
       </TableContainer>
@@ -101,15 +88,14 @@ setProducts(response.data);
                     </Button>
                     </td>
                     <td>
-                    <div >   
+                    <div >
                     <Button  variant="contained" color="secondary" href = "/">
                      Cancelar
                     </Button>
-                    </div> 
+                    </div>
                     </td>
                 </tr>
                 </div>
       </div>
     )
 }
-
