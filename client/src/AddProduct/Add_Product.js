@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import InputIcon from "@material-ui/icons/Input";
 import CancelPresentationRoundedIcon from "@material-ui/icons/CancelPresentationRounded";
 import { makeStyles } from "@material-ui/core/styles";
+import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined';
 const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(0.7),
@@ -28,14 +29,14 @@ export default function Add_Product (){
             <i className={styles.icon}>{<LabelIcon />}</i>    
             <input 
                 type="text"
-                placeholder="Titulo"
+                placeholder="Producto"
               />
             </div>
             <div className={styles.inputcontenedor}>
             <i className={styles.icon}>{<DescriptionIcon />}</i>    
             <input className = {styles.input}
                 type="text"
-                placeholder="Descripcion"
+                placeholder="Prooveedor"
               />
             </div>
             <div className={styles.inputcontenedor}>
@@ -43,6 +44,13 @@ export default function Add_Product (){
             <input className = {styles.input}
                 type="number"
                 placeholder="Precio"
+              />
+            </div>
+            <div className={styles.inputcontenedor}>
+            <i className={styles.icon}>{<ShoppingBasketOutlinedIcon/>}</i>    
+            <input className = {styles.input}
+                type="number"
+                placeholder="Stock"
               />
             </div>
             <div className = {styles.buttons}>
@@ -59,6 +67,8 @@ export default function Add_Product (){
                   color="secondary"
                   className={classes.button}
                   endIcon={<CancelPresentationRoundedIcon />}
+                  href = "/table"
+
                 >
                 Cancelar
                 </Button>

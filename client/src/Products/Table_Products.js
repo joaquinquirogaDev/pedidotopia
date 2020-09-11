@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 //Material-ui
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -19,6 +19,8 @@ const StyledTableCell = withStyles((theme) => ({
       fontSize: 17,
     },
   }))(TableCell);
+
+
   
   const StyledTableRow = withStyles((theme) => ({
     root: {
@@ -46,8 +48,24 @@ const StyledTableCell = withStyles((theme) => ({
     },
   });
 
+
+
+
 export default function Table_Products(){
-    const classes = useStyles();
+  const [products,setProducts] = useState();
+useEffect(() =>{
+if(!products){
+  fetch('http://localhost:3000/shopify/products', {
+  method: 'GET',
+}).then((response) =>{
+console.log(response.data);
+setProducts(response.data);
+})
+
+}
+  },[products]);
+
+  const classes = useStyles();
     return (
         <div style = {{marginRight: "480px", marginLeft: "480px"}}>
         <TableContainer  component={Paper}>
@@ -75,11 +93,11 @@ export default function Table_Products(){
           </TableBody>
         </Table>
       </TableContainer>
-      <div style = {{paddingLeft:"783px"}}>
+      <div style = {{paddingLeft:"805px"}}>
                 <tr>
                     <td>
-                    <Button  variant="contained" color="primary">
-                     Agregar Producto
+                    <Button  variant="contained" color="primary" href = "/product">
+                     Crear Producto
                     </Button>
                     </td>
                     <td>
