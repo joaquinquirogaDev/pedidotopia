@@ -80,7 +80,7 @@ export default function Table_Products(){
           </TableBody>
         </Table>
       </TableContainer>
-      <div style = {{paddingLeft:"805px"}}>
+      <div style = {{paddingLeft:"auto"}}>
                 <tr>
                     <td>
                     <Button  variant="contained" color="primary" href = "/product">

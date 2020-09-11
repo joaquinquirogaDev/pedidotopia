@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
-import styles from "./Add_Product.module.css"
-
+import styles from "./Add_Product.module.css";
+import { Link } from "react-router-dom";
 //Material-ui
 import DescriptionIcon from '@material-ui/icons/Description';
 import LabelIcon from '@material-ui/icons/Label';
@@ -11,6 +11,7 @@ import CancelPresentationRoundedIcon from "@material-ui/icons/CancelPresentation
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(0.7),
@@ -30,13 +31,16 @@ const useStyles = makeStyles((theme) => ({
       {
           product: {
           title: input.Product,
+          body_html: "<strong>Good snowboard!</strong>",
           vendor: input.Proveedor,
-          variants: [{inventory_quantity:input.Stock},{price:input.Price}]
+          published_scope: "web",
+          variants: [{inventory_quantity:input.Stock, price:input.Price}]
         }
       }
       axios.post("http://localhost:3000/shopify/products",data)
       .then((response) => {
        console.log("se creo");
+       Redirect("/table");
       })
     }
     const handleInputChange = function (e) {
@@ -91,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
                 value = {input.Stock}
                 type="number"
                 placeholder="Stock"
-                 onChange = {handleInputChange}
+                onChange = {handleInputChange}
               />
             </div>
             <div className = {styles.buttons}>
@@ -102,7 +106,9 @@ const useStyles = makeStyles((theme) => ({
                 className={classes.button}
                 endIcon={<InputIcon />}
               >
+                <Link to = "/table">
                 Agregar
+                </Link>
               </Button>
                 <Button
                   variant="contained"
