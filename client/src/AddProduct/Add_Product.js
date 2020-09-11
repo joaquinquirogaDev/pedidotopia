@@ -10,47 +10,55 @@ import InputIcon from "@material-ui/icons/Input";
 import CancelPresentationRoundedIcon from "@material-ui/icons/CancelPresentationRounded";
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined';
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(0.7),
     },
   }));
-   const [input, setInput] = useState({
-     Product: "",
-     Proveedor: "",
-     Price: 0,
-     Stock: 0,
-   });
-
-   const onSubmitHandle = function (event) {
-     event.preventDefault();
-     const data = {
-       Product: input.Product,
-       Price: input.Price,
-       Proveedor: input.Proveedor,
-       Stock: input.Stock,
-     };
-   }
-   const handleInputChange = function (e) {
-     setInput({
-       ...input,
-       [e.target.name]: e.target.value,
-     });
-     if (e.target.name === "Price" || e.target.name === "Stock") {
-       setInput({ ...input, [e.target.name]: Number(e.target.value) });
-    }
-   };
   export default function Add_Product (){
+    const [input, setInput] = useState({
+      Product: "",
+      Proveedor: "",
+      Price: 0,
+      Stock: 0,
+    });
+    const onSubmitHandle = function (event) {
+      event.preventDefault();
+      
+      const data = 
+      {
+          product: {
+          title: input.Product,
+          vendor: input.Proveedor,
+          variants: [{inventory_quantity:input.Stock},{price:input.Price}]
+        }
+      }
+      axios.post("http://localhost:3000/shopify/products",data)
+      .then((response) => {
+       console.log("se creo");
+      })
+    }
+    const handleInputChange = function (e) {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+        if (e.target.name === "Price" || e.target.name === "Stock") {
+          setInput({ ...input, [e.target.name]: Number(e.target.value) });
+        }
+      };
     const [renderUpdate, setRenderUpdate] = useState(false);
     const classes = useStyles();
-    return(
-        <form className = {styles.form} onChange = {onSubmitHandle}>
+      return(
+        <form className = {styles.form} onSubmit = {onSubmitHandle}>
             <div className = {styles.contenedor}>
                 
             <div className={styles.inputcontenedor}>
             <i className={styles.icon}>{<LabelIcon />}</i>    
             <input 
-                value = {input.Product && input.name}
+                name = "Product"
+                value = {input.Product}
                 type="text"
                 placeholder="Producto"
                 onChange = {handleInputChange}
@@ -59,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
             <div className={styles.inputcontenedor}>
             <i className={styles.icon}>{<DescriptionIcon />}</i>    
             <input className = {styles.input}
+                name = "Proveedor"
                 value = {input.Proveedor}
                 type="text"
                 placeholder="Prooveedor"
@@ -68,7 +77,8 @@ const useStyles = makeStyles((theme) => ({
             <div className={styles.inputcontenedor}>
             <i className={styles.icon}>{<AttachMoneyIcon/>}</i>    
             <input className = {styles.input}
-                 value = {input.Price}
+                name = "Price"
+                value = {input.Price}
                 type="number"
                 placeholder="Precio"
                 onChange = {handleInputChange}
@@ -77,7 +87,8 @@ const useStyles = makeStyles((theme) => ({
             <div className={styles.inputcontenedor}>
             <i className={styles.icon}>{<ShoppingBasketOutlinedIcon/>}</i>    
             <input className = {styles.input}
-                // value = {input.Stock}
+                name = "Stock"
+                value = {input.Stock}
                 type="number"
                 placeholder="Stock"
                  onChange = {handleInputChange}
@@ -85,12 +96,11 @@ const useStyles = makeStyles((theme) => ({
             </div>
             <div className = {styles.buttons}>
             <Button
-                onClick = {setRenderUpdate}
+                type = "submit"
                 variant="contained"
                 color="primary"
                 className={classes.button}
                 endIcon={<InputIcon />}
-                
               >
                 Agregar
               </Button>
