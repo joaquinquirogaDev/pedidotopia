@@ -14,8 +14,7 @@ server.get('/products', (req, res, next) => {
     json: true,
   }
   request(options).then((response) => {
-    console.log(response)
-    res.status(200).json(response)
+    res.status(200).json(response.products)
   })
 })
 
