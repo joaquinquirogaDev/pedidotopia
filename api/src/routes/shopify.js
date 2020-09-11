@@ -19,7 +19,7 @@ server.get('/products', (req, res, next) => {
 })
 
 server.post('/products', (req, res, next) => {
-  let {product} = req.body
+  let product = req.body
 
   let options = {
     method: 'POST',
@@ -31,6 +31,7 @@ server.post('/products', (req, res, next) => {
   request(options).then((response) => {
    res.send(response)
    })
+   .catch((error) => next(error))
 })
 
 module.exports = server
