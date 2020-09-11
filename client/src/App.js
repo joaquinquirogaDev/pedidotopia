@@ -1,25 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import Add_Product from "./AddProduct/Add_Product.js"
+import Table_Products from "./Products/Table_Products.js"
+import styles from "./App.css"
+//Material-ui
+import Button from '@material-ui/core/Button';
+import Footer from './Footer/Footer.jsx';
+
+
+
 
 function App() {
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className = {styles.App}>
+        <h1>PedidoTopia</h1>
+        {/* <div style = {{padding: "20px"}}>
+        <Button  variant="contained" color="primary" href = "/product">
+          Agregar Producto
+        </Button> */}
+        <div style = {{marginLeft: "978px"}}>
+        <Button  variant="contained" color="primary" href = "/table">
+          Listado de Productos
+        </Button>
+        </div>
+        {/* </div> */}
+        <hr/>
+      <Switch>
+         <Route path = "/product" exact>
+           <Add_Product/>
+         </Route>
+         <Route path = "/table" exact>
+           <Table_Products/>
+         </Route>
+         <Route path = "/" exact>
+           <Footer/>
+         </Route>
+      </Switch>
+      </div>
+    </Router>
   );
 }
 
