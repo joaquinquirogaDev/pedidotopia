@@ -53,6 +53,7 @@ server.post('/products', async (req, res, next) => {
 
     const images = post.product.images.map((img) =>
       Image.create({
+        productId: prod.id,
         image_id: img.id,
         product_id: img.product_id,
         position: img.position,
