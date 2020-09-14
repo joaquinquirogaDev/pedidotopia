@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Add_Product.module.css'
 import { Link } from 'react-router-dom'
+import Slider from "../Slider/Slider.js"
 //Material-ui
 import DescriptionIcon from '@material-ui/icons/Description'
 import LabelIcon from '@material-ui/icons/Label'
@@ -12,12 +13,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0.7),
   },
 }))
 export default function Add_Product() {
+  const [images, setImages] = useState([]);
   const [input, setInput] = useState({
     Product: '',
     Proveedor: '',
@@ -56,19 +59,49 @@ export default function Add_Product() {
     }
   }
 
-  const inputImageOnChange = (e) => {
-    var file = e.target.files[0],
-      reader = new FileReader()
+  // const inputImageOnChange = (e) => {
+    // var file = e.target.files[0],
+    //   reader = new FileReader()
 
-    reader.onloadend = function () {
-      var b64 = reader.result.replace(/^data:.+;base64,/, '')
-      console.log(b64)
-      setInputImage(b64)
+  //   reader.onloadend = function () {
+  //     var b64 = reader.result.replace(/^data:.+;base64,/, '')
+  //     console.log(b64)
+  //     setInputImage(b64)
+  //   }
+  //   reader.readAsDataURL(file)
+  // }
+  const uploadImg = async (e) => {
+    const files = e.target.files;
+    var newImages = [];
+
+    for(let i=0;i < files.length; i++){
+      const base64 = await convertBase64(files[i])
+      //const string = base64.replace(/^data:.+;base64,/, '');
+      newImages.push(base64);
     }
-    reader.readAsDataURL(file)
-  }
+    console.log(newImages);
+    setImages(newImages);
+    // setInput({
+    //   ...input,
+    //   image: base64,
+    // });
+  };
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-  const [renderUpdate, setRenderUpdate] = useState(false)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  //const [renderUpdate, setRenderUpdate] = useState(false)
   const classes = useStyles()
   return (
     <form
@@ -76,7 +109,19 @@ export default function Add_Product() {
       onSubmit={onSubmitHandle}
       encType='multipart/form-data'
     >
+      {/* <div className = {styles.imagecontenedor}> */}
+        <div className={styles.image}>
+          <div className={styles.slider}>
+          {images.length > 0 && <Slider images={images}/>}
+          </div>
+          <input type = "file" name  = "imagen" onChange = {(e) => {uploadImg(e);}} accept = "image/*" multiple/>
+        </div>
+        
+      
       <div className={styles.contenedor}>
+      
+
+        
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<LabelIcon />}</i>
           <input
@@ -120,7 +165,7 @@ export default function Add_Product() {
             onChange={handleInputChange}
           />
         </div>
-        <input type='file' onChange={inputImageOnChange} />
+        {/* <input type='file' onChange={inputImageOnChange} /> */}
         <div className={styles.buttons}>
           <Button
             type='submit'
@@ -129,7 +174,9 @@ export default function Add_Product() {
             className={classes.button}
             endIcon={<InputIcon />}
           >
+            <Link to = "/table">
             Agregar
+            </Link>
           </Button>
           <Button
             variant='contained'
