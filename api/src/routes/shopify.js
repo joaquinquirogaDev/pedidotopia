@@ -7,6 +7,8 @@ const { SHOPIFY_API_KEY, SHOPIFY_API_SECRET, SHOPIFY_APP_ID, SHOPIFY_API_PASSWOR
 
 const testUrl = `https://${SHOPIFY_API_KEY}:${SHOPIFY_API_PASSWORD}@${APP_DOMAIN}/admin/api/2020-07/`
 
+
+
 server.get('/products', (req, res, next) => {
   let options = {
     method: 'GET',
