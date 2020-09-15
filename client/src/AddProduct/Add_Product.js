@@ -12,14 +12,16 @@ import CancelPresentationRoundedIcon from "@material-ui/icons/CancelPresentation
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingBasketOutlinedIcon from "@material-ui/icons/ShoppingBasketOutlined";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0.7),
   },
 }));
+
 export default function Add_Product() {
+  const history = useHistory();
   const [images, setImages] = useState([]);
   const [input, setInput] = useState({
     Product: "",
@@ -50,7 +52,7 @@ export default function Add_Product() {
       .post("http://localhost:3000/shopify/products", data)
       .then((response) => {
         console.log("se creo");
-        Redirect("/table");
+        history.push("/table");
       });
   };
 
@@ -81,15 +83,10 @@ export default function Add_Product() {
 
     for (let i = 0; i < files.length; i++) {
       const base64 = await convertBase64(files[i]);
-      //const string = base64.replace(/^data:.+;base64,/, '');
       newImages.push(base64);
     }
-    console.log(newImages);
+    // console.log(newImages);
     setImages(newImages);
-    // setInput({
-    //   ...input,
-    //   image: base64,
-    // });
   };
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -116,7 +113,7 @@ export default function Add_Product() {
     >
       {/* <div className = {styles.imagecontenedor}> */}
       <div className={styles.image}>
-        <div className={styles.slider}>
+        <div className={styles.slider} marginRight="auto" marginLeft="auto">
           {images.length > 0 && <Slider images={images} />}
         </div>
         <input
@@ -183,7 +180,9 @@ export default function Add_Product() {
             className={classes.button}
             endIcon={<InputIcon />}
           >
-            <Link to="/table">Agregar</Link>
+            {/* <Link to="/table"> */}
+            Agregar
+            {/* </Link> */}
           </Button>
           <Button
             variant="contained"
