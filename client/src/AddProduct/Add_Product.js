@@ -29,7 +29,6 @@ export default function Add_Product() {
   });
 
   const arrayImages = [{ attachment: "" }];
-
   images.map((e) => {
     arrayImages.push({ attachment: e.replace(/^data:.+;base64,/, "") });
   });
@@ -75,6 +74,7 @@ export default function Add_Product() {
   //   }
   //   reader.readAsDataURL(file)
   // }
+
   const uploadImg = async (e) => {
     const files = e.target.files;
     var newImages = [];
@@ -109,15 +109,15 @@ export default function Add_Product() {
   //const [renderUpdate, setRenderUpdate] = useState(false)
   const classes = useStyles();
   return (
-    <form
+    <form 
       className={styles.form}
       onSubmit={onSubmitHandle}
       encType="multipart/form-data"
     >
       {/* <div className = {styles.imagecontenedor}> */}
-      <div className={styles.image}>
-        <div className={styles.slider}>
-          {images.length > 0 && <Slider images={images} />}
+      <div className={styles.image} >
+        <div className={styles.slider} >
+          {images.length > 0 && <Slider images={images}/>}
         </div>
         <input
           type="file"
@@ -129,7 +129,6 @@ export default function Add_Product() {
           multiple
         />
       </div>
-
       <div className={styles.contenedor}>
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<LabelIcon />}</i>

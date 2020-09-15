@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 //Material-ui
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -9,8 +11,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import { Box } from "@material-ui/core";
-import axios from "axios";
+//import { Box } from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -53,18 +55,25 @@ export default function Table_Products() {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">Imagen&nbsp;</StyledTableCell>
+              <StyledTableCell align="center">&nbsp;</StyledTableCell>
+              <StyledTableCell align="center">Imagen&nbsp;</StyledTableCell>
               <StyledTableCell align="left">Producto&nbsp;</StyledTableCell>
               <StyledTableCell align="center">Proveedor&nbsp;</StyledTableCell>
               <StyledTableCell align="right">Stock</StyledTableCell>
               <StyledTableCell align="right">Tipo&nbsp;</StyledTableCell>
               <StyledTableCell align="right">Precio</StyledTableCell>
+              <StyledTableCell align="right">Editar</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {products ? (
               products.map((product) => (
                 <StyledTableRow key={product.id}>
+                  <StyledTableCell align="left">
+                    <i>
+                    <DeleteOutlineIcon/>
+                    </i>
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <span>
                       <img
@@ -89,6 +98,13 @@ export default function Table_Products() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {product.variants[0].price}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Button href = "/edit">
+                    <i>
+                      <EditIcon/>
+                    </i>
+                    </Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))

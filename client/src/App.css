@@ -5,6 +5,8 @@
 h1{
   font-size: 50px;
   padding-left: 950px;
+  margin-right: auto;
+  margin-left: auto;
   color: tomato;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
