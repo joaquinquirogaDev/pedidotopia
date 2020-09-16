@@ -18,7 +18,10 @@ server.get('/products', (req, res, next) => {
     method: 'GET',
     uri: testUrl + 'products.json',
     json: true,
-  }
+
+  };
+
+
   request(options).then((response) => {
     res.status(200).json(response.products)
   })
