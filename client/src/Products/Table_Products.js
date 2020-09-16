@@ -107,7 +107,8 @@ export default function Table_Products() {
                 // console.log(product)&&
                 <StyledTableRow key={product.id}>
                   <StyledTableCell align="left">
-                    <Button onClick = {() => onDeleted(product.id,product.product_id)}>
+                    <Button 
+                    onClick = {() => onDeleted(product.id,product.product_id)}>
                     <i>
                     <DeleteOutlineIcon/>
                     </i>
