@@ -36,12 +36,13 @@ server.get("/", async (req, res, next) => {
         variantId = values[1].dataValues.id;
         return product.setVariants(variantId);
       })
+
       .then((pruduct) => {
-        return Product.findAll({ include: [Variant] })
+        Product.findAll({ include: [Variant] })
           .then((products) => {
             res.send(products);
           })
-          .catch(next);
+          .catch((e) => next(e));
       });
   });
 });

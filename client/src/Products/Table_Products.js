@@ -116,9 +116,13 @@ export default function Table_Products() {
                     <span>
                       <img
                         src={
-                          product.images &&
-                          product.images.length > 0 &&
-                          product.images[0].src
+                          product.images_shopify &&
+                          product.images_shopify.length > 0 &&
+                          product.images_shopify[0]
+                            .split('src":"')
+                            .pop()
+                            .split('","variant_ids"')
+                            .shift()
                         }
                         height="100px"
                         width="100px"
@@ -140,7 +144,7 @@ export default function Table_Products() {
                     {product.product_type}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {product.variants[0].price}
+                    {product.variants.length > 0 && product.variants[0].price}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Button href="/edit">
