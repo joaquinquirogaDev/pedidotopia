@@ -1,16 +1,50 @@
-import React from "react"
+import React, {useState} from "react"
 import styles from "./EditProduct.module.css"
+import Slider from "../Slider/Slider.js";
 //Material-ui
 import { Input, InputLabel, Container, FormControl, FormHelperText, Button, Grid} from "@material-ui/core"
+import axios from "axios"
 
 
 
 
-export default function EditProduct (){
-     return(
-         <form className = {styles.form}>
+export default function EditProduct (variantId){
+    const arrayImages = [{ attachment: "" }];
+    const [images, setImages] = useState([]);
+    const [input, setInput] = useState({});
+    const onChange = function () {
+        const data = {
+        title: input.Product,
+        body_html: "<strong>Good snowboard!</strong>",
+        vendor: input.Proveedor,
+        published_scope: "web",
+        variants: [{ inventory_quantity: input.Stock, price: input.Price }],
+        images: arrayImages,
+        };
+        axios.put(`http://localhost:3000/shopify/products/${variantId}`, data).then((res) => {
+          alert("Actualizado correctamente");
+        });
+      };
+    return(
+         <form className = {styles.form} >
+         <Grid alignItems = "center">
+        <div className={styles.img} >
+        <div className={styles.sli} >
+          {images.length > 0 && <Slider images={images}/>}
+        </div>
+        <input 
+         
+          type="file"
+          name="imagen"
+          
+          
+          accept="image/*"
+          multiple
+        />
+      </div>
+      </Grid>
      <Container maxWidth = "md">
-         <Grid container alignItems="center" justify="flex-end" direction="column" spacing = {1}>
+         <Grid container alignItems="flex-end" justify="flex-start" direction="column" spacing = {1}>
             <Grid item md = {12}>
        <FormControl>
            <InputLabel htmlFor = "">Producto</InputLabel>
@@ -39,9 +73,13 @@ export default function EditProduct (){
            <FormHelperText>Escriba su nuevo precio</FormHelperText>
        </FormControl>
        </Grid>
-       <Grid direction="row" justify="center" alignItems="center">
-       <Button variant = "contained" color = "primary">
-           Editar
+       <Grid direction="row" justify="center" alignItems="center" spacing = {3}>
+       <Button 
+       variant = "contained" 
+       color = "primary"
+       onClick = {onChange}
+       >
+           Guardar cambios
        </Button>
        <Button variant = "contained" color = "secondary" href = "/table">
            Cancelar

@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Table_Products() {
+export default function Table_Products({id}) {
   const [products, setProducts] = useState();
   useEffect(() => {
     if (!products) {
@@ -47,6 +47,12 @@ export default function Table_Products() {
       });
     }
   }, [products]);
+
+  const onDeleted = function () {
+    axios.delete(`http://localhost:3000/shopify/products/${id}`).then((res) => {
+      alert("Eliminado correctamente");
+    });
+  };
 
   const classes = useStyles();
   return (
@@ -70,9 +76,11 @@ export default function Table_Products() {
               products.map((product) => (
                 <StyledTableRow key={product.id}>
                   <StyledTableCell align="left">
+                    <Button onClick = {onDeleted} >
                     <i>
                     <DeleteOutlineIcon/>
                     </i>
+                    </Button>
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <span>
