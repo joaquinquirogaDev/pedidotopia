@@ -1,0 +1,9 @@
+.form{
+    border-radius: 8px;
+    background-color: seashell;
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content; 
+    padding: 30px;
+}

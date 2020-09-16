@@ -42,7 +42,7 @@ server.post('/products', async (req, res, next) => {
 
     const prod = await Product.create({
       title: post.product.title,
-      description: post.product.body_html,
+      vendor: post.product.vendor,
       product_id: post.product.id,
     })
     await Variant.create({
@@ -72,6 +72,7 @@ server.post('/products', async (req, res, next) => {
       include: [Variant, Image],
     }).then((product) => res.send(product))
   } catch (error) {
+    console.log(error)
     res.status(500).send(error)
   }
 })
@@ -92,7 +93,7 @@ server.put('/products/:id', async (req, res) => {
     const prod = await Product.findByPk(req.params.id)
     await prod.update({
       title: put.product.title,
-      description: put.product.body_html,
+      vendor: put.product.vendor,
       product_id: put.product.id,
     })
 
@@ -114,6 +115,7 @@ server.put('/products/:id', async (req, res) => {
 })
 
 server.delete('/products/:id', async (req, res) => {
+  console.log(req.body)
   try {
     let url = testUrl + `/products/${req.body.product.id}.json`
 
@@ -121,7 +123,6 @@ server.delete('/products/:id', async (req, res) => {
       method: 'DELETE',
       uri: url,
     }
-
     await request(options)
 
     const prod = await Product.findByPk(req.params.id)

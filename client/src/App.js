@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import Add_Product from "./AddProduct/Add_Product.js"
 import Table_Products from "./Products/Table_Products.js"
 import styles from "./App.css"
+import EditProduct from "./Edit_Product/EditProduct.js"
 //Material-ui
 import Button from '@material-ui/core/Button';
 import Footer from './Footer/Footer.jsx';
@@ -37,6 +38,9 @@ function App() {
          </Route>
          <Route path = "/" exact>
            <Footer/>
+         </Route>
+         <Route path = "/edit" exact>
+           <EditProduct/>
          </Route>
       </Switch>
       </div>

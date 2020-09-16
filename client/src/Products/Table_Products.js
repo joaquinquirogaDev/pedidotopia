@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 //Material-ui
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -9,8 +12,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
-
+//import { Box } from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -36,15 +39,50 @@ const useStyles = makeStyles({
 });
 
 export default function Table_Products() {
+  const history = useHistory();
   const [products, setProducts] = useState();
+  
+  
   useEffect(() => {
     if (!products) {
-      axios.get("http://localhost:3000/shopify/products").then((res) => {
+      axios.get("http://localhost:3000/api/product").then((res) => {
         console.log(res.data);
         setProducts(res.data);
       });
     }
   }, [products]);
+
+  const onDeleted = function (id,product_id) {
+    console.log(id,product_id)
+    // if(products[0].id){
+    //   const data = {
+    //     product: {
+    //         id: products[0].product_id
+    //     }
+    // }
+    // console.log(data)
+      // axios.delete(`http://localhost:3000/shopify/products/${products[0].id}`,{data: {product: {id: products[0].product_id}}}).then((res) => {
+      //   alert("Eliminado correctamente");
+      // });
+      fetch(`http://localhost:3000/shopify/products/${id}`, {
+        method: 'DELETE',
+        
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product:{
+              id: product_id
+          }
+          }),
+      })
+      
+      .then((response) =>{
+        history.push("/");
+      })
+    // }
+  };
 
   const classes = useStyles();
   return (
@@ -53,22 +91,32 @@ export default function Table_Products() {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">Imagen&nbsp;</StyledTableCell>
+              <StyledTableCell align="center">&nbsp;</StyledTableCell>
+              <StyledTableCell align="center">Imagen&nbsp;</StyledTableCell>
               <StyledTableCell align="left">Producto&nbsp;</StyledTableCell>
               <StyledTableCell align="center">Proveedor&nbsp;</StyledTableCell>
               <StyledTableCell align="right">Stock</StyledTableCell>
               <StyledTableCell align="right">Tipo&nbsp;</StyledTableCell>
               <StyledTableCell align="right">Precio</StyledTableCell>
+              <StyledTableCell align="right">Editar</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {products ? (
               products.map((product) => (
+                // console.log(product)&&
                 <StyledTableRow key={product.id}>
+                  <StyledTableCell align="left">
+                    <Button onClick = {() => onDeleted(product.id,product.product_id)}>
+                    <i>
+                    <DeleteOutlineIcon/>
+                    </i>
+                    </Button>
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <span>
                       <img
-                        src={product.image && product.image.src}
+                        src={product && product.images.length > 0 && product.images[0].src}
                         height="100px"
                         width="100px"
                         alt=""
@@ -89,6 +137,13 @@ export default function Table_Products() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {product.variants[0].price}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Button href = "/edit">
+                    <i>
+                      <EditIcon/>
+                    </i>
+                    </Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))
