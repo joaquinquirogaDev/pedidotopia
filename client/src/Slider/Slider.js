@@ -3,13 +3,6 @@ import styles from "./Slider.module.css";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 
-// const images = [
-//   {image: "https://www.bu.edu/eng/files/2016/04/400x200.shutterstock_263248619-copy.jpg"},
-//   {image: "https://gradle.org/images/gradle-400x400.png"},
-//   {image: "https://trinket-user-assets.trinket.io/a58fc3c83bacd7531287dd54c5f0580927894613-56ce822d9e067cab682b844e.jpg"},
-//   {image: "https://img.europapress.es/fotoweb/fotonoticia_20160309121838_420.jpg"}
-// ]
-
 const SliderItem = function (props) {
   const handleRadioChange = function (e) {
     let newImg = Number(e.target.id);
@@ -26,9 +19,6 @@ const SliderItem = function (props) {
     </div>
   );
 };
-// {images.map(function(image,index){
-//   return <SliderItem changeImg={setImg} index={index}/>
-// })}
 
 export default function Slider(props) {
   const [img, setImg] = useState(0);
