@@ -8,9 +8,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
+    vendor: {
+      type: DataTypes.STRING,
     },
+
     product_id: {
       type: DataTypes.BIGINT,
     },

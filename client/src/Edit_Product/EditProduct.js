@@ -8,7 +8,7 @@ import axios from "axios"
 
 
 
-export default function EditProduct (variantId){
+export default function EditProduct (id){
     const arrayImages = [{ attachment: "" }];
     const [images, setImages] = useState([]);
     const [input, setInput] = useState({});
@@ -21,7 +21,7 @@ export default function EditProduct (variantId){
         variants: [{ inventory_quantity: input.Stock, price: input.Price }],
         images: arrayImages,
         };
-        axios.put(`http://localhost:3000/shopify/products/${variantId}`, data).then((res) => {
+        axios.put(`http://localhost:3000/shopify/products/${id}`, data).then((res) => {
           alert("Actualizado correctamente");
         });
       };
