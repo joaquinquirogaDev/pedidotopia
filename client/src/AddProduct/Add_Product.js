@@ -43,7 +43,13 @@ export default function Add_Product() {
         body_html: "<strong>Good snowboard!</strong>",
         vendor: input.Proveedor,
         published_scope: "web",
-        variants: [{ inventory_quantity: input.Stock, price: input.Price }],
+        variants: [
+          {
+            inventory_management: "shopify",
+            inventory_quantity: input.Stock,
+            price: input.Price,
+          },
+        ],
         images: arrayImages,
       },
     };
@@ -106,7 +112,7 @@ export default function Add_Product() {
   //const [renderUpdate, setRenderUpdate] = useState(false)
   const classes = useStyles();
   return (
-    <form 
+    <form
       className={styles.form}
       onSubmit={onSubmitHandle}
       encType="multipart/form-data"
