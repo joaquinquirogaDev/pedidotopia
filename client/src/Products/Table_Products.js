@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 //Material-ui
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -13,7 +13,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 //import { Box } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -41,8 +41,7 @@ const useStyles = makeStyles({
 export default function Table_Products() {
   const history = useHistory();
   const [products, setProducts] = useState();
-  
-  
+
   useEffect(() => {
     if (!products) {
       axios.get("http://localhost:3000/api/product").then((res) => {
@@ -52,8 +51,8 @@ export default function Table_Products() {
     }
   }, [products]);
 
-  const onDeleted = function (id,product_id) {
-    console.log(id,product_id)
+  const onDeleted = function (id, product_id) {
+    console.log(id, product_id);
     // if(products[0].id){
     //   const data = {
     //     product: {
@@ -61,26 +60,24 @@ export default function Table_Products() {
     //     }
     // }
     // console.log(data)
-      // axios.delete(`http://localhost:3000/shopify/products/${products[0].id}`,{data: {product: {id: products[0].product_id}}}).then((res) => {
-      //   alert("Eliminado correctamente");
-      // });
-      fetch(`http://localhost:3000/shopify/products/${id}`, {
-        method: 'DELETE',
-        
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+    // axios.delete(`http://localhost:3000/shopify/products/${products[0].id}`,{data: {product: {id: products[0].product_id}}}).then((res) => {
+    //   alert("Eliminado correctamente");
+    // });
+    fetch(`http://localhost:3000/shopify/products/${id}`, {
+      method: "DELETE",
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        product: {
+          id: product_id,
         },
-        body: JSON.stringify({
-          product:{
-              id: product_id
-          }
-          }),
-      })
-      
-      .then((response) =>{
-        history.push("/");
-      })
+      }),
+    }).then((response) => {
+      history.push("/");
+    });
     // }
   };
 
@@ -107,17 +104,26 @@ export default function Table_Products() {
                 // console.log(product)&&
                 <StyledTableRow key={product.id}>
                   <StyledTableCell align="left">
-                    <Button 
-                    onClick = {() => onDeleted(product.id,product.product_id)}>
-                    <i>
-                    <DeleteOutlineIcon/>
-                    </i>
+                    <Button
+                      onClick={() => onDeleted(product.id, product.product_id)}
+                    >
+                      <i>
+                        <DeleteOutlineIcon />
+                      </i>
                     </Button>
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <span>
                       <img
-                        src={product && product.images.length > 0 && product.images[0].src}
+                        src={
+                          product.images_shopify &&
+                          product.images_shopify.length > 0 &&
+                          product.images_shopify[0]
+                            .split('src":"')
+                            .pop()
+                            .split('","variant_ids"')
+                            .shift()
+                        }
                         height="100px"
                         width="100px"
                         alt=""
@@ -131,19 +137,20 @@ export default function Table_Products() {
                     {product.vendor}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {product.variants[0].inventory_quantity}
+                    {product.variants[0] &&
+                      product.variants[0].inventory_quantity}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {product.product_type}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {product.variants[0].price}
+                    {product.variants.length > 0 && product.variants[0].price}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <Button href = "/edit">
-                    <i>
-                      <EditIcon/>
-                    </i>
+                    <Button href="/edit">
+                      <i>
+                        <EditIcon />
+                      </i>
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, StylesProvider } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/lab";
 import styles from "./Answer.module.css";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -52,8 +52,8 @@ export default function Answer() {
             Esta Seguro de Borrar?
           </Alert>
         </div>
-        {/* <Button variant = "contained" color = "primary" onClick = {() => onDeleted(product.id,product.product_id)}>
-                 Borrar
+        {/* <Button variant = "contained" color = "primary" onClick = {() => onDeleted(product.id,product.product_id)}> */}
+        {/* Borrar
                 </Button>    */}
         <Button variant="contained" color="secondary" href="/table">
           Cancelar
