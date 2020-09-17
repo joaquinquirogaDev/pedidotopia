@@ -44,6 +44,7 @@ Product.hasMany(Variant);
 Variant.belongsTo(Product);
 
 Product.hasMany(Image);
+Image.belongsTo(Product);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

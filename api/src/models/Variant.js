@@ -4,9 +4,9 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("variant", {
-    // product_id: {
-    //   type: DataTypes.BIGINT,
-    // },
+    product_id_shopify: {
+      type: DataTypes.BIGINT,
+    },
     // variant_id: {
     //   type: DataTypes.BIGINT,
     // },
