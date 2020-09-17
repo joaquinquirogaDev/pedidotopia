@@ -75,9 +75,25 @@ server.post("/products", async (req, res, next) => {
   }
 });
 
+server.get("/products/:id", async (req, res) => {
+  let url = testUrl + `/products/${req.params.id}.json`;
+  console.log(url);
+
+  let options = {
+    method: "GET",
+    uri: url,
+    // body: req.body,
+    json: true,
+  };
+
+  const data = await request(options);
+  res.send(data);
+});
+
 server.put("/products/:id", async (req, res) => {
   try {
-    let url = testUrl + `/products/${req.body.product.id}.json`;
+    let url = testUrl + `/products/${req.params.id}.json`;
+    console.log(req.body);
 
     let options = {
       method: "PUT",
@@ -87,35 +103,36 @@ server.put("/products/:id", async (req, res) => {
     };
 
     const put = await request(options);
+    res.send(`Su producto con id ${req.params.id} se actualizo correctamente`);
 
-    const prod = await Product.findByPk(req.params.id);
-    await prod.update({
-      title: put.product.title,
-      vendor: put.product.vendor,
-      product_id_shopify: put.product.id,
-    });
+    // const prod = await Product.findByPk(req.params.id);
+    // await prod.update({
+    //   title: put.product.title,
+    //   vendor: put.product.vendor,
+    //   product_id_shopify: put.product.id,
+    // });
 
-    const vr = await Variant.findByPk(req.body.product.variants[0].variantId);
-    await vr.update({
-      title: put.product.variants[0].title,
-      price: put.product.variants[0].price,
-      inventory_quantity: put.product.variants[0].inventory_quantity,
-      sku: put.product.variants[0].sku,
-    });
+    // const vr = await Variant.findByPk(req.body.product.variants[0].variantId);
+    // await vr.update({
+    //   title: put.product.variants[0].title,
+    //   price: put.product.variants[0].price,
+    //   inventory_quantity: put.product.variants[0].inventory_quantity,
+    //   sku: put.product.variants[0].sku,
+    // });
 
-    Product.findOne({
-      where: { id: prod.id },
-      include: [Variant, Image],
-    }).then((product) => res.send(product));
+    // Product.findOne({
+    //   where: { id: prod.id },
+    //   include: [Variant, Image],
+    // }).then((product) => res.send(product));
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
 server.delete("/products/:id", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
-    let url = testUrl + `/products/${req.body.product.id}.json`;
+    let url = testUrl + `/products/${req.params.id}.json`;
 
     let options = {
       method: "DELETE",
@@ -123,14 +140,14 @@ server.delete("/products/:id", async (req, res) => {
     };
     await request(options);
 
-    const prod = await Product.findByPk(req.params.id);
-    await prod.destroy();
-    const vr = await Variant.findAll({ where: { productId: req.params.id } });
-    const variants = vr.map((variant) => variant.destroy());
-    await Promise.all(variants);
-    const img = await Image.findAll({ where: { productId: req.params.id } });
-    const images = img.map((image) => image.destroy());
-    await Promise.all(images);
+    // const prod = await Product.findByPk(req.params.id);
+    // await prod.destroy();
+    // const vr = await Variant.findAll({ where: { productId: req.params.id } });
+    // const variants = vr.map((variant) => variant.destroy());
+    // await Promise.all(variants);
+    // const img = await Image.findAll({ where: { productId: req.params.id } });
+    // const images = img.map((image) => image.destroy());
+    // await Promise.all(images);
 
     res.send("OK");
   } catch (error) {

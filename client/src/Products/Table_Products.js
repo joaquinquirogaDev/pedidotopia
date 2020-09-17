@@ -44,7 +44,7 @@ export default function Table_Products() {
 
   useEffect(() => {
     if (!products) {
-      axios.get("http://localhost:3000/api/product").then((res) => {
+      axios.get("http://localhost:3000/shopify/products").then((res) => {
         console.log(res.data);
         setProducts(res.data);
       });
@@ -147,7 +147,7 @@ export default function Table_Products() {
                     {product.variants.length > 0 && product.variants[0].price}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <Button href="/edit">
+                    <Button href={`/edit/${product.id}`}>
                       <i>
                         <EditIcon />
                       </i>

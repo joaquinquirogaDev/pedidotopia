@@ -13,13 +13,15 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 
-export default function EditProduct(id) {
-  const arrayImages = [{ attachment: "" }];
+export default function EditProduct({ match }) {
+  const id = match.params.id;
+  // const arrayImages = [{ attachment: "" }];
   const [images, setImages] = useState([]);
   const [input, setInput] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:3000/shopify/products/${id}`).then((res) => {
+      console.log(res.data.product.title);
       setInput({
         Product: res.data.product.title,
         Proveedor: res.data.product.vendor,
@@ -30,14 +32,27 @@ export default function EditProduct(id) {
     });
   }, []);
 
-  const onChange = function () {
+  const onChange = function (e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    if (e.target.name === "Price" || e.target.name === "Stock") {
+      setInput({ ...input, [e.target.name]: Number(e.target.value) });
+    }
+  };
+
+  const onSubmit = function () {
     const data = {
-      title: input.Product,
-      body_html: "<strong>Good snowboard!</strong>",
-      vendor: input.Proveedor,
-      published_scope: "web",
-      variants: [{ inventory_quantity: input.Stock, price: input.Price }],
-      images: arrayImages,
+      product: {
+        id: id,
+        title: input.Product,
+        body_html: "<strong>Good snowboard!</strong>",
+        vendor: input.Proveedor,
+        published_scope: "web",
+        variants: [{ inventory_quantity: input.Stock, price: input.Price }],
+        // images: arrayImages,
+      },
     };
     axios
       .put(`http://localhost:3000/shopify/products/${id}`, data)
@@ -67,27 +82,47 @@ export default function EditProduct(id) {
           <Grid item md={12}>
             <FormControl>
               <InputLabel htmlFor="">Producto</InputLabel>
-              <Input type="text" />
+              <Input
+                type="text"
+                name="Product"
+                value={input.Product}
+                onChange={onChange}
+              />
               <FormHelperText>Escriba su nuevo producto</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item md={12}>
             <FormControl>
               <InputLabel htmlFor="">Proveedor</InputLabel>
-              <Input type="text" />
+              <Input
+                type="text"
+                name="Proveedor"
+                value={input.Proveedor}
+                onChange={onChange}
+              />
               <FormHelperText>Escriba su nuevo proveedor</FormHelperText>
             </FormControl>
             <Grid item md={12}></Grid>
             <FormControl>
               <InputLabel htmlFor="">Stock</InputLabel>
-              <Input type="number" />
+              <Input
+                type="number"
+                name="Stock"
+                value={input.Stock}
+                onChange={onChange}
+              />
               <FormHelperText>Escriba su nuevo stock</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item md={12}>
             <FormControl>
               <InputLabel htmlFor="">Precio</InputLabel>
-              <Input type="number" />
+              <Input
+                type="number"
+                name="Price"
+                value={input.Price}
+                onChange={onChange}
+              />
               <FormHelperText>Escriba su nuevo precio</FormHelperText>
             </FormControl>
           </Grid>
@@ -97,7 +132,7 @@ export default function EditProduct(id) {
             alignItems="center"
             spacing={3}
           >
-            <Button variant="contained" color="primary" onClick={onChange}>
+            <Button variant="contained" color="primary" onClick={onSubmit}>
               Guardar cambios
             </Button>
             <Button variant="contained" color="secondary" href="/table">
