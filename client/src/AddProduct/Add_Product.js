@@ -112,94 +112,96 @@ export default function Add_Product() {
   //const [renderUpdate, setRenderUpdate] = useState(false)
   const classes = useStyles();
   return (
-    <form
-      className={styles.form}
-      onSubmit={onSubmitHandle}
-      encType="multipart/form-data"
-    >
-      {/* <div className = {styles.imagecontenedor}> */}
-      <div className={styles.image}>
-        <div className={styles.slider} marginRight="auto" marginLeft="auto">
-          {images.length > 0 && <Slider images={images} />}
-        </div>
-        <input
-          type="file"
-          name="imagen"
-          onChange={(e) => {
-            uploadImg(e);
-          }}
-          accept="image/*"
-          multiple
-        />
-      </div>
-      <div className={styles.contenedor}>
-        <div className={styles.inputcontenedor}>
-          <i className={styles.icon}>{<LabelIcon />}</i>
+    <div style={{ height: "500px" }}>
+      <form
+        className={styles.form}
+        onSubmit={onSubmitHandle}
+        encType="multipart/form-data"
+      >
+        {/* <div className = {styles.imagecontenedor}> */}
+        <div className={styles.image}>
+          <div className={styles.slider} marginRight="auto" marginLeft="auto">
+            {images.length > 0 && <Slider images={images} />}
+          </div>
           <input
-            name="Product"
-            value={input.Product}
-            type="text"
-            placeholder="Producto"
-            onChange={handleInputChange}
+            type="file"
+            name="imagen"
+            onChange={(e) => {
+              uploadImg(e);
+            }}
+            accept="image/*"
+            multiple
           />
         </div>
-        <div className={styles.inputcontenedor}>
-          <i className={styles.icon}>{<DescriptionIcon />}</i>
-          <input
-            className={styles.input}
-            name="Proveedor"
-            value={input.Proveedor}
-            type="text"
-            placeholder="Prooveedor"
-            onChange={handleInputChange}
-          />
+        <div className={styles.contenedor}>
+          <div className={styles.inputcontenedor}>
+            <i className={styles.icon}>{<LabelIcon />}</i>
+            <input
+              name="Product"
+              value={input.Product}
+              type="text"
+              placeholder="Producto"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={styles.inputcontenedor}>
+            <i className={styles.icon}>{<DescriptionIcon />}</i>
+            <input
+              className={styles.input}
+              name="Proveedor"
+              value={input.Proveedor}
+              type="text"
+              placeholder="Prooveedor"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={styles.inputcontenedor}>
+            <i className={styles.icon}>{<AttachMoneyIcon />}</i>
+            <input
+              className={styles.input}
+              name="Price"
+              value={input.Price}
+              type="number"
+              placeholder="Precio"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={styles.inputcontenedor}>
+            <i className={styles.icon}>{<ShoppingBasketOutlinedIcon />}</i>
+            <input
+              className={styles.input}
+              name="Stock"
+              value={input.Stock}
+              type="number"
+              placeholder="Stock"
+              onChange={handleInputChange}
+            />
+          </div>
+          {/* <input type='file' onChange={inputImageOnChange} /> */}
+          <div className={styles.buttons}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              endIcon={<InputIcon />}
+            >
+              {/* <Link to="/table"> */}
+              Agregar
+              {/* </Link> */}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              endIcon={<CancelPresentationRoundedIcon />}
+              href="/table"
+            >
+              Cancelar
+            </Button>
+          </div>
         </div>
-        <div className={styles.inputcontenedor}>
-          <i className={styles.icon}>{<AttachMoneyIcon />}</i>
-          <input
-            className={styles.input}
-            name="Price"
-            value={input.Price}
-            type="number"
-            placeholder="Precio"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={styles.inputcontenedor}>
-          <i className={styles.icon}>{<ShoppingBasketOutlinedIcon />}</i>
-          <input
-            className={styles.input}
-            name="Stock"
-            value={input.Stock}
-            type="number"
-            placeholder="Stock"
-            onChange={handleInputChange}
-          />
-        </div>
-        {/* <input type='file' onChange={inputImageOnChange} /> */}
-        <div className={styles.buttons}>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            endIcon={<InputIcon />}
-          >
-            {/* <Link to="/table"> */}
-            Agregar
-            {/* </Link> */}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            endIcon={<CancelPresentationRoundedIcon />}
-            href="/table"
-          >
-            Cancelar
-          </Button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
