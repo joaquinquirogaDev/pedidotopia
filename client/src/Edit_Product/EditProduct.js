@@ -10,11 +10,26 @@ import {
   FormHelperText,
   Button,
   Grid,
+  makeStyles
 } from "@material-ui/core";
+  
 import axios from "axios";
+
+
+const useStyles = makeStyles((theme) => ({
+  
+  margin: {
+    margin: theme.spacing(1),
+    
+  },
+  textField: {
+    width: '15ch',
+  },
+}));
 
 export default function EditProduct({ match }) {
   const id = match.params.id;
+  const classes = useStyles();
   // const arrayImages = [{ attachment: "" }];
   const [images, setImages] = useState([]);
   const [input, setInput] = useState({});
@@ -63,6 +78,9 @@ export default function EditProduct({ match }) {
 
   return (
     <form className={styles.form}>
+      <div className = {styles.image}>
+
+      
       <Grid alignItems="center">
         <div className={styles.img}>
           <div className={styles.sli}>
@@ -71,6 +89,7 @@ export default function EditProduct({ match }) {
           <input type="file" name="imagen" accept="image/*" multiple />
         </div>
       </Grid>
+      </div>
       <Container maxWidth="md">
         <Grid
           container
@@ -80,49 +99,55 @@ export default function EditProduct({ match }) {
           spacing={1}
         >
           <Grid item md={12}>
-            <FormControl>
-              <InputLabel htmlFor="">Producto</InputLabel>
+            <FormControl fullWidth className={classes.margin} variant = "standard">
+            <div className = {styles.inputcontainer}>
+              
               <Input
                 type="text"
                 name="Product"
                 value={input.Product}
                 onChange={onChange}
               />
+              </div>
               <FormHelperText>Escriba su nuevo producto</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item md={12}>
-            <FormControl>
-              <InputLabel htmlFor="">Proveedor</InputLabel>
+            <FormControl fullWidth className={classes.margin} variant = "standard">
+            <div className = {styles.inputcontainer}>
+              
               <Input
                 type="text"
                 name="Proveedor"
                 value={input.Proveedor}
                 onChange={onChange}
               />
+              </div>
               <FormHelperText>Escriba su nuevo proveedor</FormHelperText>
             </FormControl>
             <Grid item md={12}></Grid>
-            <FormControl>
-              <InputLabel htmlFor="">Stock</InputLabel>
+            <FormControl fullWidth className={classes.margin} variant = "standard">
+              <div className = {styles.inputcontainer}>
               <Input
                 type="number"
                 name="Stock"
                 value={input.Stock}
                 onChange={onChange}
               />
+              </div>
               <FormHelperText>Escriba su nuevo stock</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item md={12}>
-            <FormControl>
-              <InputLabel htmlFor="">Precio</InputLabel>
+            <FormControl fullWidth className={classes.margin} variant = "standard">
+            <div className = {styles.inputcontainer}>
               <Input
                 type="number"
                 name="Price"
                 value={input.Price}
                 onChange={onChange}
               />
+              </div>
               <FormHelperText>Escriba su nuevo precio</FormHelperText>
             </FormControl>
           </Grid>
@@ -130,7 +155,7 @@ export default function EditProduct({ match }) {
             direction="row"
             justify="center"
             alignItems="center"
-            spacing={3}
+            spacing={10}
           >
             <Button variant="contained" color="primary" onClick={onSubmit}>
               Guardar cambios
