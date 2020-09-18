@@ -51,35 +51,7 @@ export default function Table_Products() {
     }
   }, [products]);
 
-  const onDeleted = function (id, product_id) {
-    console.log(id, product_id);
-    // if(products[0].id){
-    //   const data = {
-    //     product: {
-    //         id: products[0].product_id
-    //     }
-    // }
-    // console.log(data)
-    // axios.delete(`http://localhost:3000/shopify/products/${products[0].id}`,{data: {product: {id: products[0].product_id}}}).then((res) => {
-    //   alert("Eliminado correctamente");
-    // });
-    fetch(`http://localhost:3000/shopify/products/${id}`, {
-      method: "DELETE",
-
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product: {
-          id: product_id,
-        },
-      }),
-    }).then((response) => {
-      history.push("/");
-    });
-    // }
-  };
+  console.log(products);
 
   const classes = useStyles();
   return (
@@ -104,9 +76,7 @@ export default function Table_Products() {
                 // console.log(product)&&
                 <StyledTableRow key={product.id}>
                   <StyledTableCell align="left">
-                    <Button
-                      onClick={() => onDeleted(product.id, product.product_id)}
-                    >
+                    <Button href={`/answer/${product.id}`}>
                       <i>
                         <DeleteOutlineIcon />
                       </i>
@@ -115,15 +85,7 @@ export default function Table_Products() {
                   <StyledTableCell align="center">
                     <span>
                       <img
-                        src={
-                          product.images_shopify &&
-                          product.images_shopify.length > 0 &&
-                          product.images_shopify[0]
-                            .split('src":"')
-                            .pop()
-                            .split('","variant_ids"')
-                            .shift()
-                        }
+                        src={product.image && product.image.src}
                         height="100px"
                         width="100px"
                         alt=""

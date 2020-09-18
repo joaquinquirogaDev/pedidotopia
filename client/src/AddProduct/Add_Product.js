@@ -109,7 +109,6 @@ export default function Add_Product() {
     });
   };
 
-  //const [renderUpdate, setRenderUpdate] = useState(false)
   const classes = useStyles();
   return (
     <form
@@ -178,7 +177,6 @@ export default function Add_Product() {
             />
           </div>
         </div>
-        {/* <input type='file' onChange={inputImageOnChange} /> */}
         <div className={styles.buttons}>
           <Button
             type="submit"
@@ -187,9 +185,7 @@ export default function Add_Product() {
             className={classes.button}
             endIcon={<InputIcon />}
           >
-            {/* <Link to="/table"> */}
             Agregar
-            {/* </Link> */}
           </Button>
           <Button
             variant="contained"

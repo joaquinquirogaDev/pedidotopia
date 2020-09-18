@@ -37,9 +37,7 @@ function App() {
             <Footer />
           </Route>
           <Route path="/edit/:id" component={EditProduct} />
-          <Route path="/answer" exact>
-            <Answer />
-          </Route>
+          <Route path="/answer/:id" component={Answer} />
         </Switch>
       </div>
     </Router>
