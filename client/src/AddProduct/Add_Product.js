@@ -117,6 +117,7 @@ export default function Add_Product() {
       onSubmit={onSubmitHandle}
       encType="multipart/form-data"
     >
+   <div className={styles.contenedor}>
       {/* <div className = {styles.imagecontenedor}> */}
       <div className={styles.image}>
         <div className={styles.slider} marginRight="auto" marginLeft="auto">
@@ -132,7 +133,7 @@ export default function Add_Product() {
           multiple
         />
       </div>
-      <div className={styles.contenedor}>
+      <div className = {styles.input}> 
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<LabelIcon />}</i>
           <input
@@ -146,7 +147,7 @@ export default function Add_Product() {
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<DescriptionIcon />}</i>
           <input
-            className={styles.input}
+            // className={styles.input}
             name="Proveedor"
             value={input.Proveedor}
             type="text"
@@ -157,7 +158,7 @@ export default function Add_Product() {
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<AttachMoneyIcon />}</i>
           <input
-            className={styles.input}
+            // className={styles.input}
             name="Price"
             value={input.Price}
             type="number"
@@ -168,13 +169,14 @@ export default function Add_Product() {
         <div className={styles.inputcontenedor}>
           <i className={styles.icon}>{<ShoppingBasketOutlinedIcon />}</i>
           <input
-            className={styles.input}
+            // className={styles.input}
             name="Stock"
             value={input.Stock}
             type="number"
             placeholder="Stock"
             onChange={handleInputChange}
           />
+        </div>
         </div>
         {/* <input type='file' onChange={inputImageOnChange} /> */}
         <div className={styles.buttons}>

@@ -6,15 +6,18 @@
     z-index: 50;
     top: 0;
     left: 0;
+    /* filter: invert(1) hue-rotate(180deg); */
 }
 .image{
-    padding: -25px;
-    padding-top:210px;
-	width: 450px;
-	height: 550px;
+	width: 400px;
+	height: 100%;
 	overflow: hidden;
-	margin-left: 600px;
-	float: left;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
 }
 
 .slider{
@@ -23,7 +26,7 @@
 	margin-bottom: 20px;
 }
 .contenedor{
-    width: 900px;
+    width: 1000px;
     padding: 10px;
     margin-top: 160px;
     height: 450px;
@@ -38,27 +41,32 @@
 .contenedor input[type = "text"],
 .contenedor input[type = "number"]{
     font-size: 20px;
-    width: 88.9%;
+    width: 90%;
     padding: 10px;
     border: none;
     border-radius: 8px;
+    
+}
+.input{
+    width: 500px;
+    float: left;
+    height: fit-content;
+    margin-left: 70px;
 }
 .inputcontenedor{
-    margin-top: 50px;
-    margin-bottom: 30px;
     border: 1px solid white;
     background-color: white;
     position: relative;
     border-radius:6px;
     width:400px;
-    margin-left: 490px;
+    margin-top: 50px;
+    
 }
-::placeholder{
+/* ::placeholder{
     font-size:17px;
     text-align: left;
-    
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+} */
 .icon{
     padding-right: 25px;
     position: relative;
@@ -71,5 +79,7 @@
     top:5px;
 }
 .buttons{
-    margin-left: 570px;
+    float: left;
+    margin-left: 130px;
+    margin-top: 20px;
 }
